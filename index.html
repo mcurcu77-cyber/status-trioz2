@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stato servizi — Pannello</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#06d6a0;--danger:#ff6b6b;--glass:rgba(255,255,255,0.04)}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#e6eef6;background:linear-gradient(180deg,#071027 0%, #051027 100%);-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:40px auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#1fb6ff);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .logo svg{width:34px;height:34px}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg,var(--card),#071726);padding:18px;border-radius:14px;box-shadow:0 6px 20px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:12px}
+    .card h3{margin:0;font-size:15px}
+    .card .desc{color:var(--muted);font-size:13px}
+
+    .status-row{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+    .badge{padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px;display:inline-flex;gap:8px;align-items:center}
+    .ok{background:rgba(6,214,160,0.12);color:var(--accent);border:1px solid rgba(6,214,160,0.12)}
+    .down{background:rgba(255,107,107,0.08);color:var(--danger);border:1px solid rgba(255,107,107,0.08)}
+    .muted{background:var(--glass);color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+
+    .controls{display:flex;gap:8px}
+    button.btn{padding:8px 12px;border-radius:10px;border:0;font-weight:600;cursor:pointer;background:rgba(255,255,255,0.03);color:inherit}
+    button.btn:active{transform:translateY(1px)}
+    button.small{padding:6px 8px;font-size:13px}
+    .hint{font-size:12px;color:var(--muted)}
+
+    footer{margin-top:20px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between}
+
+    /* tiny status list */
+    .status-list{display:flex;flex-direction:column;gap:8px}
+    .status-item{display:flex;align-items:center;gap:12px}
+    .dot{width:12px;height:12px;border-radius:50%}
+    .dot.ok{background:linear-gradient(180deg,var(--accent),#04a87a)}
+    .dot.down{background:linear-gradient(180deg,#ff8c8c,#ff4b4b)}
+    .meta{font-size:13px;color:var(--muted)}
+
+    /* accessible focus */
+    :focus{outline:3px solid rgba(255,255,255,0.06);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z" fill="white" opacity="0.06"/><path d="M8 12h8M12 8v8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/></svg>
+        </div>
+        <div>
+          <h1>Stato servizi</h1>
+          <p class="lead">Visualizza rapidamente lo stato delle funzioni del server. (Verifica: non operativo)</p>
+        </div>
+      </div>
+      <div class="controls" aria-hidden="false">
+        <button class="btn small" id="refreshBtn" title="Aggiorna stati">↻ Aggiorna</button>
+        <button class="btn small" id="copyBtn" title="Copia JSON stato">Copia JSON</button>
+      </div>
+    </header>
+
+    <section class="grid" aria-label="Elenco servizi">
+
+      <!-- Card template -->
+      <article class="card" id="regole">
+        <h3>Regole</h3>
+        <div class="desc">Messaggio e canale delle regole del server.</div>
+        <div class="status-row">
+          <div class="status-list">
+            <div class="status-item"><span class="dot ok"></span><strong>Operativo</strong><span class="meta"> · Online e pubblicato</span></div>
+          </div>
+          <div class="badge ok" aria-live="polite">✔ Operativo</div>
+        </div>
+      </article>
+
+      <article class="card" id="benvenuto">
+        <h3>Benvenuto</h3>
+        <div class="desc">Messaggio automatico inviato ai nuovi membri.</div>
+        <div class="status-row">
+          <div class="status-list">
+            <div class="status-item"><span class="dot ok"></span><strong>Operativo</strong><span class="meta"> · Attivo nel canale impostato</span></div>
+          </div>
+          <div class="badge ok">✔ Operativo</div>
+        </div>
+      </article>
+
+      <article class="card" id="addio">
+        <h3>Addio</h3>
+        <div class="desc">Messaggio inviato quando un membro lascia il server.</div>
+        <div class="status-row">
+          <div class="status-list">
+            <div class="status-item"><span class="dot ok"></span><strong>Operativo</strong><span class="meta"> · Invia notifiche correttamente</span></div>
+          </div>
+          <div class="badge ok">✔ Operativo</div>
+        </div>
+      </article>
+
+      <article class="card" id="verifica">
+        <h3>Verifica</h3>
+        <div class="desc">Sistema di verifica (disabilitato su richiesta).</div>
+        <div class="status-row">
+          <div class="status-list">
+            <div class="status-item"><span class="dot down"></span><strong>Non operativo</strong><span class="meta"> · Verifica disabilitata</span></div>
+          </div>
+          <div class="badge down">✖ Non operativo</div>
+        </div>
+        <div class="hint">Nota: la verifica è inattiva e non riceve richieste. Per riattivarla modifica il sistema backend.</div>
+      </article>
+
+      <article class="card" id="logs">
+        <h3>Logs</h3>
+        <div class="desc">Registrazione eventi: messaggi, moderazione e attività.</div>
+        <div class="status-row">
+          <div class="status-list">
+            <div class="status-item"><span class="dot ok"></span><strong>Operativo</strong><span class="meta"> · Archiviazione attiva</span></div>
+          </div>
+          <div class="badge ok">✔ Operativo</div>
+        </div>
+      </article>
+
+      <article class="card" id="radio">
+        <h3>Radio</h3>
+        <div class="desc">Player radio / stream integrato nel server.</div>
+        <div class="status-row">
+          <div class="status-list">
+            <div class="status-item"><span class="dot ok"></span><strong>Operativo</strong><span class="meta"> · Streaming attivo</span></div>
+          </div>
+          <div class="badge ok">✔ Operativo</div>
+        </div>
+      </article>
+
+      <article class="card" id="ticket">
+        <h3>Ticket</h3>
+        <div class="desc">Sistema ticket per supporto e richieste staff.</div>
+        <div class="status-row">
+          <div class="status-list">
+            <div class="status-item"><span class="dot ok"></span><strong>Operativo</strong><span class="meta"> · Apertura e tracking funzionanti</span></div>
+          </div>
+          <div class="badge ok">✔ Operativo</div>
+        </div>
+      </article>
+
+    </section>
+
+    <footer>
+      <div>Ultimo aggiornamento: <strong id="lastUpdate">—</strong></div>
+      <div class="meta">Interfaccia client-side · Copia o salva questo file come <code>status.html</code></div>
+    </footer>
+  </main>
+
+  <script>
+    // Stato iniziale (gli stati reali andrebbero caricati dal backend)
+    const state = {
+      regole: 'operativo',
+      benvenuto: 'operativo',
+      addio: 'operativo',
+      verifica: 'non_operativo',
+      logs: 'operativo',
+      radio: 'operativo',
+      ticket: 'operativo',
+      lastUpdated: new Date().toISOString()
+    };
+
+    function isoToReadable(iso){
+      const d = new Date(iso);
+      return d.toLocaleString('it-IT', {dateStyle:'short', timeStyle:'short'});
+    }
+
+    function updateUI(){
+      document.getElementById('lastUpdate').textContent = isoToReadable(state.lastUpdated);
+      // badges already reflect the requested design; could update dynamically if backend used
+    }
+
+    // copy JSON
+    document.getElementById('copyBtn').addEventListener('click', async ()=>{
+      try{
+        await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
+        const btn=document.getElementById('copyBtn');
+        btn.textContent='Copiato!';
+        setTimeout(()=>btn.textContent='Copia JSON stato',1200);
+      }catch(e){
+        alert('Impossibile copiare. Usa il tasto destro per salvare il file.');
+      }
+    });
+
+    // refresh (simulato) — in produzione questo chiamerebbe il backend
+    document.getElementById('refreshBtn').addEventListener('click', ()=>{
+      state.lastUpdated = new Date().toISOString();
+      updateUI();
+      const btn=document.getElementById('refreshBtn');
+      btn.textContent='Aggiornato';
+      setTimeout(()=>btn.textContent='↻ Aggiorna',900);
+    });
+
+    // inizializza
+    updateUI();
+  </script>
+</body>
+</html>
