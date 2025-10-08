@@ -32,7 +32,6 @@
     .radio-playing{display:flex;align-items:center;gap:10px}
     .equalizer{width:40px;height:22px;display:flex;align-items:end;gap:3px}
     .bar{width:6px;height:6px;background:white;border-radius:3px;opacity:0.2;transform-origin:center bottom}
-    .bar.peak{opacity:1}
 
     .logs{height:150px;overflow:auto;background:rgba(0,0,0,0.15);padding:10px;border-radius:8px;font-family:monospace;font-size:13px;color:#dbeafe}
     .muted-note{font-size:13px;color:var(--muted)}
@@ -53,7 +52,7 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">Visualizza lo stato corrente dei moduli. Tutto operativo tranne Verifica e Ticket.</div>
+        <div class="sub">Visualizza lo stato corrente dei moduli. Tutto operativo tranne Autoruoli.</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
@@ -62,11 +61,12 @@
     </header>
 
     <main class="grid">
+
       <!-- Welcome -->
       <section class="card" aria-labelledby="welcome-title">
         <h2 id="welcome-title">Benvenuto</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on" aria-hidden></span>
+          <span class="dot on"></span>
           <div>
             <div class="big">Operativo</div>
             <div class="label">Messaggio di benvenuto attivo e funzionante</div>
@@ -82,7 +82,7 @@
       <section class="card" aria-labelledby="goodbye-title">
         <h2 id="goodbye-title">Addio</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on" aria-hidden></span>
+          <span class="dot on"></span>
           <div>
             <div class="big">Operativo</div>
             <div class="label">Messaggio d'addio inviato correttamente</div>
@@ -94,18 +94,18 @@
         </div>
       </section>
 
-      <!-- Verify (non operativo) -->
+      <!-- Verify -->
       <section class="card" aria-labelledby="verify-title">
         <h2 id="verify-title">Verifica</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot off" aria-hidden></span>
+          <span class="dot on"></span>
           <div>
-            <div class="big">Non operativo</div>
-            <div class="label">Modulo verifica disabilitato — integrarlo oppure attivarlo nel bot.</div>
+            <div class="big">Operativo</div>
+            <div class="label">Modulo verifica attivo e funzionante</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" disabled title="Non disponibile">Configura (disabilitato)</button>
+          <button class="btn">Configura</button>
           <button class="btn" onclick="showGuide('verify')">Guida</button>
         </div>
       </section>
@@ -114,7 +114,7 @@
       <section class="card" aria-labelledby="rules-title">
         <h2 id="rules-title">Regole</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on" aria-hidden></span>
+          <span class="dot on"></span>
           <div>
             <div class="big">Operativo</div>
             <div class="label">Regole pubblicate e visibili ai nuovi utenti</div>
@@ -130,14 +130,13 @@
       <section class="card" aria-labelledby="logs-title">
         <h2 id="logs-title">Logs</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on" aria-hidden></span>
+          <span class="dot on"></span>
           <div>
             <div class="big">Operativo</div>
             <div class="label">Registrazione eventi attiva</div>
           </div>
         </div>
-        <div class="logs" id="log-box" role="log" aria-live="polite"> <!-- logs injected by JS -->
-        </div>
+        <div class="logs" id="log-box" role="log" aria-live="polite"></div>
         <div class="controls">
           <button class="btn" onclick="downloadLogs()">Scarica</button>
           <button class="btn" onclick="clearLogs()">Svuota</button>
@@ -148,7 +147,7 @@
       <section class="card" aria-labelledby="radio-title">
         <h2 id="radio-title">Radio</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on" aria-hidden></span>
+          <span class="dot on"></span>
           <div>
             <div class="big">Operativo</div>
             <div class="label">Streaming radio in esecuzione</div>
@@ -171,39 +170,55 @@
         </div>
       </section>
 
-      <!-- Ticket (non operativo) -->
+      <!-- Ticket -->
       <section class="card" aria-labelledby="ticket-title">
         <h2 id="ticket-title">Ticket</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot off" aria-hidden></span>
+          <span class="dot on"></span>
           <div>
-            <div class="big">Non operativo</div>
-            <div class="label">Sistema ticket disattivato — funzionalità non disponibile</div>
+            <div class="big">Operativo</div>
+            <div class="label">Sistema ticket funzionante e disponibile</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" disabled>Apri ticket</button>
+          <button class="btn">Apri ticket</button>
           <button class="btn" onclick="showGuide('ticket')">Guida</button>
+        </div>
+      </section>
+
+      <!-- Autoruoli (non operativo) -->
+      <section class="card" aria-labelledby="autoroles-title">
+        <h2 id="autoroles-title">Autoruoli</h2>
+        <div class="status" style="margin-bottom:8px">
+          <span class="dot off"></span>
+          <div>
+            <div class="big">Non operativo</div>
+            <div class="label">Sistema di assegnazione automatica ruoli disattivato — attivalo dal bot o pannello API.</div>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn" disabled>Configura (disabilitato)</button>
+          <button class="btn" onclick="showGuide('autoroles')">Guida</button>
         </div>
       </section>
 
     </main>
 
     <footer>
-      Dashboard generata localmente — tutte le azioni qui sono mock (fintanto che il server bot non è collegato). Vuoi che ti generi anche la versione con collegamento reale (API)?
+      Dashboard generata localmente — tutte le azioni qui sono mock (fintanto che il server bot non è collegato).
     </footer>
   </div>
 
-  <!-- Modal / rule pane -->
+  <!-- Modal -->
   <div class="modal" id="modal">
     <div class="pane" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <h3 id="modal-title">Regole del server</h3>
-      <p class="muted-note">Mantieni le regole brevi, chiare e visibili. Esempio:</p>
+      <p class="muted-note">Mantieni le regole brevi e chiare. Esempio:</p>
       <ol>
         <li>Rispetto reciproco — niente offese.</li>
-        <li>Canali a tema: usa il canale giusto per ogni argomento.</li>
-        <li>No spam, no pubblicità senza permesso.</li>
-        <li>Segui gli staff e i moderatori.</li>
+        <li>Usa il canale giusto per ogni argomento.</li>
+        <li>No spam o pubblicità non autorizzata.</li>
+        <li>Segui lo staff e i moderatori.</li>
       </ol>
       <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
         <button class="btn" onclick="closeModal()">Chiudi</button>
@@ -213,7 +228,6 @@
   </div>
 
   <script>
-    // --- Small helpers ---
     const logBox = document.getElementById('log-box');
     const modal = document.getElementById('modal');
 
@@ -224,83 +238,73 @@
       logBox.prepend(el);
     }
 
-    // seed some logs
-    const initialLogs = [
-      'Sistema avviato',
-      'Utente @Marco si è unito',
-      'Messaggio di benvenuto inviato a @Luca',
-      'Radio: streaming connesso',
-      'Regole aggiornate da Admin'
-    ];
-    initialLogs.forEach(l=>appendLog(l));
+    // Log iniziali
+    ['Sistema avviato','Utente @Marco si è unito','Messaggio di benvenuto inviato a @Luca','Radio: streaming connesso','Regole aggiornate da Admin']
+      .forEach(l=>appendLog(l));
 
     function clearLogs(){ if(confirm('Svuotare i log?')) logBox.innerHTML=''; }
     function downloadLogs(){
       const text = Array.from(logBox.children).map(x=>x.textContent).reverse().join('\n');
       const blob = new Blob([text], {type:'text/plain'});
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download='logs.txt'; a.click(); URL.revokeObjectURL(url);
+      const a = document.createElement('a');
+      a.href=url; a.download='logs.txt'; a.click();
+      URL.revokeObjectURL(url);
     }
 
     function copyText(key){
-      const samples = {
-        welcome: 'Benvenuto! Leggi le regole e divertiti 🙂',
-        goodbye: 'Grazie per essere stato con noi — a presto!',
-        radio: 'https://radio.example/stream'
+      const samples={
+        welcome:'Benvenuto! Leggi le regole e divertiti 🙂',
+        goodbye:'Grazie per essere stato con noi — a presto!',
+        radio:'https://radio.example/stream'
       };
       navigator.clipboard?.writeText(samples[key]||'')
-        .then(()=> alert('Testo copiato negli appunti'))
-        .catch(()=> alert('Copia non supportata'));
+        .then(()=>alert('Testo copiato negli appunti'))
+        .catch(()=>alert('Copia non supportata'));
     }
 
-    // modal
-    function closeModal(){ modal.classList.remove('open') }
-    function openModal(){ modal.classList.add('open') }
-    document.getElementById('btn-open-rules').onclick = openModal;
-    document.getElementById('btn-open-rules-2').onclick = openModal;
+    function closeModal(){ modal.classList.remove('open'); }
+    function openModal(){ modal.classList.add('open'); }
+    document.getElementById('btn-open-rules').onclick=openModal;
+    document.getElementById('btn-open-rules-2').onclick=openModal;
     function acceptRules(){ alert('Regole salvate (simulato)'); closeModal(); appendLog('Regole salvate da UI'); }
 
-    // preview messages
-    function showWelcome(){ alert('Anteprima benvenuto:\n\nBenvenuto! Leggi le regole e divertiti 🙂') }
-    function showGoodbye(){ alert('Anteprima addio:\n\nGrazie per essere stato con noi — a presto!') }
+    function showWelcome(){ alert('Anteprima benvenuto:\n\nBenvenuto! Leggi le regole e divertiti 🙂'); }
+    function showGoodbye(){ alert('Anteprima addio:\n\nGrazie per essere stato con noi — a presto!'); }
 
     function showGuide(module){
       if(module==='verify'){
-        alert('Guida Verifica:\n- Installa il modulo verify nel bot\n- Imposta ruolo di membro\n- Prova con un account di test')
+        alert('Guida Verifica:\n- Il modulo verifica è attivo\n- Puoi configurarlo dal pannello o dal bot');
       } else if(module==='ticket'){
-        alert('Guida Ticket:\n- Collega webhook per i ticket\n- Configura canale di supporto\n- Attiva il listener dal bot')
+        alert('Guida Ticket:\n- Usa il comando /ticket setup\n- Personalizza i canali e i ruoli di supporto');
+      } else if(module==='autoroles'){
+        alert('Guida Autoruoli:\n- Assicurati che il bot abbia il permesso Gestisci Ruoli\n- Configura i ruoli automatici nel pannello\n- Riavvia il modulo autoruoli');
       }
     }
 
     function editRules(){ openModal(); }
 
-    // Radio equalizer animation (pure visual)
-    const bars = [document.getElementById('b1'),document.getElementById('b2'),document.getElementById('b3'),document.getElementById('b4')];
-    let radioPlaying = true;
-    let eqInterval = null;
-
-    function animateEq(){
-      bars.forEach(b=>{
-        const h = 6 + Math.floor(Math.random()*28);
-        b.style.height = h+'px';
-        b.style.opacity = 0.4 + Math.random()*0.6;
-      })
-    }
-    function startEq(){ if(eqInterval) clearInterval(eqInterval); eqInterval = setInterval(animateEq,180); animateEq(); }
-    function stopEq(){ if(eqInterval) clearInterval(eqInterval); bars.forEach(b=>{b.style.height='6px';b.style.opacity=0.2}); }
+    const bars=[b1,b2,b3,b4].map(id=>document.getElementById(id.id));
+    let eqInterval;
+    function animateEq(){ bars.forEach(b=>{b.style.height=6+Math.random()*26+'px';b.style.opacity=0.4+Math.random()*0.6;}); }
+    function startEq(){ eqInterval=setInterval(animateEq,180); animateEq(); }
+    function stopEq(){ clearInterval(eqInterval); bars.forEach(b=>{b.style.height='6px';b.style.opacity=0.2;}); }
     startEq();
 
-    function toggleRadio(){ radioPlaying = !radioPlaying; document.getElementById('btn-play').textContent = radioPlaying ? 'Metti in pausa' : 'Riproduci'; if(radioPlaying) startEq(); else stopEq(); appendLog('Radio ' + (radioPlaying? 'in riproduzione' : 'in pausa')) }
-
-    // Refresh button simulates status check
-    document.getElementById('btn-refresh').onclick = ()=>{
-      appendLog('Controllo stato eseguito');
-      alert('Stato aggiornato — (simulazione)');
+    let radioPlaying=true;
+    function toggleRadio(){
+      radioPlaying=!radioPlaying;
+      document.getElementById('btn-play').textContent=radioPlaying?'Metti in pausa':'Riproduci';
+      if(radioPlaying) startEq(); else stopEq();
+      appendLog('Radio '+(radioPlaying?'in riproduzione':'in pausa'));
     }
 
-    // small accessibility: close modal on ESC
-    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal() });
+    document.getElementById('btn-refresh').onclick=()=>{
+      appendLog('Controllo stato eseguito');
+      alert('Stato aggiornato — (simulazione)');
+    };
 
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
   </script>
 </body>
 </html>
