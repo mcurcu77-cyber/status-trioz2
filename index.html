@@ -52,7 +52,7 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">Visualizza lo stato corrente dei moduli. Tutto operativo tranne Autoruoli.</div>
+        <div class="sub">Visualizza lo stato corrente dei moduli. Tutto operativo tranne Ticket.</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
@@ -170,34 +170,34 @@
         </div>
       </section>
 
-      <!-- Ticket -->
+      <!-- Ticket (NON operativo) -->
       <section class="card" aria-labelledby="ticket-title">
         <h2 id="ticket-title">Ticket</h2>
-        <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
-          <div>
-            <div class="big">Operativo</div>
-            <div class="label">Sistema ticket funzionante e disponibile</div>
-          </div>
-        </div>
-        <div class="controls">
-          <button class="btn">Apri ticket</button>
-          <button class="btn" onclick="showGuide('ticket')">Guida</button>
-        </div>
-      </section>
-
-      <!-- Autoruoli (non operativo) -->
-      <section class="card" aria-labelledby="autoroles-title">
-        <h2 id="autoroles-title">Autoruoli</h2>
         <div class="status" style="margin-bottom:8px">
           <span class="dot off"></span>
           <div>
             <div class="big">Non operativo</div>
-            <div class="label">Sistema di assegnazione automatica ruoli disattivato — attivalo dal bot o pannello API.</div>
+            <div class="label">Sistema ticket disattivato — attivalo dal bot o pannello API</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" disabled>Configura (disabilitato)</button>
+          <button class="btn" disabled>Apri ticket (disabilitato)</button>
+          <button class="btn" onclick="showGuide('ticket')">Guida</button>
+        </div>
+      </section>
+
+      <!-- Autoruoli -->
+      <section class="card" aria-labelledby="autoroles-title">
+        <h2 id="autoroles-title">Autoruoli</h2>
+        <div class="status" style="margin-bottom:8px">
+          <span class="dot on"></span>
+          <div>
+            <div class="big">Operativo</div>
+            <div class="label">Sistema di assegnazione automatica ruoli attivo</div>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn">Configura</button>
           <button class="btn" onclick="showGuide('autoroles')">Guida</button>
         </div>
       </section>
@@ -276,7 +276,7 @@
       if(module==='verify'){
         alert('Guida Verifica:\n- Il modulo verifica è attivo\n- Puoi configurarlo dal pannello o dal bot');
       } else if(module==='ticket'){
-        alert('Guida Ticket:\n- Usa il comando /ticket setup\n- Personalizza i canali e i ruoli di supporto');
+        alert('Guida Ticket:\n- Il sistema ticket è disattivato\n- Attivalo dal pannello o dal bot per usarlo');
       } else if(module==='autoroles'){
         alert('Guida Autoruoli:\n- Assicurati che il bot abbia il permesso Gestisci Ruoli\n- Configura i ruoli automatici nel pannello\n- Riavvia il modulo autoruoli');
       }
@@ -299,11 +299,7 @@
       appendLog('Radio '+(radioPlaying?'in riproduzione':'in pausa'));
     }
 
-    document.getElementById('btn-refresh').onclick=()=>{
-      appendLog('Controllo stato eseguito');
-      alert('Stato aggiornato — (simulazione)');
-    };
-
+    document.getElementById('btn-refresh').onclick=()=>{ appendLog('Controllo stato eseguito'); alert('Stato aggiornato — (simulazione)'); };
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
   </script>
 </body>
