@@ -28,7 +28,6 @@
     button.primary{background:linear-gradient(90deg,var(--accent),#0ea5b3);border:none;color:#082027}
     button.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04)}
 
-    /* Special blocks */
     .radio-playing{display:flex;align-items:center;gap:10px}
     .equalizer{width:40px;height:22px;display:flex;align-items:end;gap:3px}
     .bar{width:6px;height:6px;background:white;border-radius:3px;opacity:0.2;transform-origin:center bottom}
@@ -36,14 +35,12 @@
     .logs{height:150px;overflow:auto;background:rgba(0,0,0,0.15);padding:10px;border-radius:8px;font-family:monospace;font-size:13px;color:#dbeafe}
     .muted-note{font-size:13px;color:var(--muted)}
 
-    /* Modal */
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:40}
     .modal.open{display:flex}
     .modal .pane{background:linear-gradient(180deg,#071428,#08182a);padding:18px;border-radius:12px;max-width:720px;width:94%;box-shadow:0 10px 40px rgba(2,6,23,0.7)}
 
     footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
 
-    /* Responsive */
     @media (max-width:540px){header{flex-direction:column;align-items:flex-start;gap:10px}}
   </style>
 </head>
@@ -52,7 +49,7 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">Visualizza lo stato corrente dei moduli. Tutto operativo tranne Ticket.</div>
+        <div class="sub">Visualizza lo stato corrente dei moduli. Tutto operativo ✅</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
@@ -170,18 +167,18 @@
         </div>
       </section>
 
-      <!-- Ticket (NON operativo) -->
+      <!-- Ticket (ora operativo ✅) -->
       <section class="card" aria-labelledby="ticket-title">
         <h2 id="ticket-title">Ticket</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot off"></span>
+          <span class="dot on"></span>
           <div>
-            <div class="big">Non operativo</div>
-            <div class="label">Sistema ticket disattivato — attivalo dal bot o pannello API</div>
+            <div class="big">Operativo</div>
+            <div class="label">Sistema ticket attivo e funzionante</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" disabled>Apri ticket (disabilitato)</button>
+          <button class="btn primary" onclick="appendLog('Nuovo ticket aperto da UI')">Apri ticket</button>
           <button class="btn" onclick="showGuide('ticket')">Guida</button>
         </div>
       </section>
@@ -238,8 +235,7 @@
       logBox.prepend(el);
     }
 
-    // Log iniziali
-    ['Sistema avviato','Utente @Marco si è unito','Messaggio di benvenuto inviato a @Luca','Radio: streaming connesso','Regole aggiornate da Admin']
+    ['Sistema avviato','Utente @Marco si è unito','Messaggio di benvenuto inviato a @Luca','Radio: streaming connesso','Regole aggiornate da Admin','Sistema Ticket attivo']
       .forEach(l=>appendLog(l));
 
     function clearLogs(){ if(confirm('Svuotare i log?')) logBox.innerHTML=''; }
@@ -276,7 +272,7 @@
       if(module==='verify'){
         alert('Guida Verifica:\n- Il modulo verifica è attivo\n- Puoi configurarlo dal pannello o dal bot');
       } else if(module==='ticket'){
-        alert('Guida Ticket:\n- Il sistema ticket è disattivato\n- Attivalo dal pannello o dal bot per usarlo');
+        alert('Guida Ticket:\n- Il sistema ticket è operativo\n- Gli utenti possono aprire richieste direttamente dal bot o dal pannello');
       } else if(module==='autoroles'){
         alert('Guida Autoruoli:\n- Assicurati che il bot abbia il permesso Gestisci Ruoli\n- Configura i ruoli automatici nel pannello\n- Riavvia il modulo autoruoli');
       }
@@ -284,7 +280,7 @@
 
     function editRules(){ openModal(); }
 
-    const bars=[b1,b2,b3,b4].map(id=>document.getElementById(id.id));
+    const bars=[b1,b2,b3,b4];
     let eqInterval;
     function animateEq(){ bars.forEach(b=>{b.style.height=6+Math.random()*26+'px';b.style.opacity=0.4+Math.random()*0.6;}); }
     function startEq(){ eqInterval=setInterval(animateEq,180); animateEq(); }
@@ -299,7 +295,7 @@
       appendLog('Radio '+(radioPlaying?'in riproduzione':'in pausa'));
     }
 
-    document.getElementById('btn-refresh').onclick=()=>{ appendLog('Controllo stato eseguito'); alert('Stato aggiornato — (simulazione)'); };
+    document.getElementById('btn-refresh').onclick=()=>{ appendLog('Controllo stato eseguito'); alert('Tutti i moduli operativi ✅'); };
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
   </script>
 </body>
