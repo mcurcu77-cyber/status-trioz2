@@ -19,7 +19,7 @@
     .status{display:flex;align-items:center;gap:10px}
     .dot{width:12px;height:12px;border-radius:50%;flex:0 0 12px}
     .on{background:linear-gradient(90deg,#34d399,#10b981);box-shadow:0 4px 12px rgba(16,185,129,0.12)}
-    .off{background:#334155}
+    .off{background:#ef4444;box-shadow:0 4px 12px rgba(239,68,68,0.08)}
     .label{font-size:13px;color:var(--muted)}
     .big{font-weight:700;color:#e6eef6}
 
@@ -28,6 +28,7 @@
     button.primary{background:linear-gradient(90deg,var(--accent),#0ea5b3);border:none;color:#082027}
     button.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04)}
 
+    button[disabled]{opacity:0.45;cursor:not-allowed}
     .radio-playing{display:flex;align-items:center;gap:10px}
     .equalizer{width:40px;height:22px;display:flex;align-items:end;gap:3px}
     .bar{width:6px;height:6px;background:white;border-radius:3px;opacity:0.2;transform-origin:center bottom}
@@ -49,11 +50,11 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">Visualizza lo stato corrente dei moduli. Tutto operativo ✅</div>
+        <div class="sub">Manutenzione in corso — alcuni servizi potrebbero essere offline. Solo la radio è operativa.</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
-        <button class="btn" id="btn-open-rules">Regole</button>
+        <button class="btn" id="btn-open-rules" disabled>Regole</button>
       </div>
     </header>
 
@@ -63,15 +64,15 @@
       <section class="card" aria-labelledby="welcome-title">
         <h2 id="welcome-title">Benvenuto</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Messaggio di benvenuto attivo e funzionante</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Messaggio di benvenuto disattivato (manutenzione)</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showWelcome()">Anteprima</button>
-          <button class="btn" onclick="copyText('welcome')">Copia testo</button>
+          <button class="btn" disabled>Anteprima</button>
+          <button class="btn" disabled>Copia testo</button>
         </div>
       </section>
 
@@ -79,15 +80,15 @@
       <section class="card" aria-labelledby="goodbye-title">
         <h2 id="goodbye-title">Addio</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Messaggio d'addio inviato correttamente</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Messaggio d'addio momentaneamente sospeso</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showGoodbye()">Anteprima</button>
-          <button class="btn" onclick="copyText('goodbye')">Copia testo</button>
+          <button class="btn" disabled>Anteprima</button>
+          <button class="btn" disabled>Copia testo</button>
         </div>
       </section>
 
@@ -95,15 +96,15 @@
       <section class="card" aria-labelledby="verify-title">
         <h2 id="verify-title">Verifica</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Modulo verifica attivo e funzionante</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Modulo verifica offline — in aggiornamento</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn">Configura</button>
-          <button class="btn" onclick="showGuide('verify')">Guida</button>
+          <button class="btn" disabled>Configura</button>
+          <button class="btn" disabled>Guida</button>
         </div>
       </section>
 
@@ -111,15 +112,15 @@
       <section class="card" aria-labelledby="rules-title">
         <h2 id="rules-title">Regole</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Regole pubblicate e visibili ai nuovi utenti</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Pannello regole disconnesso</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" id="btn-open-rules-2">Visualizza</button>
-          <button class="btn" onclick="editRules()">Modifica</button>
+          <button class="btn" id="btn-open-rules-2" disabled>Visualizza</button>
+          <button class="btn" disabled>Modifica</button>
         </div>
       </section>
 
@@ -127,10 +128,10 @@
       <section class="card" aria-labelledby="logs-title">
         <h2 id="logs-title">Logs</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Registrazione eventi attiva</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Registrazione eventi temporaneamente non aggiornata</div>
           </div>
         </div>
         <div class="logs" id="log-box" role="log" aria-live="polite"></div>
@@ -147,7 +148,7 @@
           <span class="dot on"></span>
           <div>
             <div class="big">Operativo</div>
-            <div class="label">Streaming radio in esecuzione</div>
+            <div class="label">Streaming radio attivo</div>
           </div>
         </div>
         <div class="radio-playing">
@@ -167,19 +168,19 @@
         </div>
       </section>
 
-      <!-- Ticket (ora operativo ✅) -->
+      <!-- Ticket (ora non operativo) -->
       <section class="card" aria-labelledby="ticket-title">
         <h2 id="ticket-title">Ticket</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Sistema ticket attivo e funzionante</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Sistema ticket sospeso</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn primary" onclick="appendLog('Nuovo ticket aperto da UI')">Apri ticket</button>
-          <button class="btn" onclick="showGuide('ticket')">Guida</button>
+          <button class="btn primary" disabled>Apri ticket</button>
+          <button class="btn" disabled>Guida</button>
         </div>
       </section>
 
@@ -187,22 +188,22 @@
       <section class="card" aria-labelledby="autoroles-title">
         <h2 id="autoroles-title">Autoruoli</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Sistema di assegnazione automatica ruoli attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Autoruoli sospesi</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn">Configura</button>
-          <button class="btn" onclick="showGuide('autoroles')">Guida</button>
+          <button class="btn" disabled>Configura</button>
+          <button class="btn" disabled>Guida</button>
         </div>
       </section>
 
     </main>
 
     <footer>
-      Dashboard generata localmente — tutte le azioni qui sono mock (fintanto che il server bot non è collegato).
+      Dashboard locale — molti servizi sono simulati e attualmente in manutenzione (solo radio attiva).
     </footer>
   </div>
 
@@ -235,7 +236,13 @@
       logBox.prepend(el);
     }
 
-    ['Sistema avviato','Utente @Marco si è unito','Messaggio di benvenuto inviato a @Luca','Radio: streaming connesso','Regole aggiornate da Admin','Sistema Ticket attivo']
+    // Log iniziali che riflettono lo stato di manutenzione
+    ['AVVISO: manutenzione programmata attiva',
+     'Errore: Modulo verifica non raggiungibile',
+     'Errore: Messaggio di benvenuto non inviato (timeout)',
+     'Errore: Sistema ticket non risponde',
+     'Info: Radio streaming connesso',
+     'Errore: Autoruoli non aggiornati']
       .forEach(l=>appendLog(l));
 
     function clearLogs(){ if(confirm('Svuotare i log?')) logBox.innerHTML=''; }
@@ -261,8 +268,8 @@
 
     function closeModal(){ modal.classList.remove('open'); }
     function openModal(){ modal.classList.add('open'); }
-    document.getElementById('btn-open-rules').onclick=openModal;
-    document.getElementById('btn-open-rules-2').onclick=openModal;
+    document.getElementById('btn-open-rules')?.onclick=openModal;
+    document.getElementById('btn-open-rules-2')?.onclick=openModal;
     function acceptRules(){ alert('Regole salvate (simulato)'); closeModal(); appendLog('Regole salvate da UI'); }
 
     function showWelcome(){ alert('Anteprima benvenuto:\n\nBenvenuto! Leggi le regole e divertiti 🙂'); }
@@ -270,21 +277,24 @@
 
     function showGuide(module){
       if(module==='verify'){
-        alert('Guida Verifica:\n- Il modulo verifica è attivo\n- Puoi configurarlo dal pannello o dal bot');
+        alert('Guida Verifica:\n- Il modulo verifica è attualmente offline.');
       } else if(module==='ticket'){
-        alert('Guida Ticket:\n- Il sistema ticket è operativo\n- Gli utenti possono aprire richieste direttamente dal bot o dal pannello');
+        alert('Guida Ticket:\n- Il sistema ticket è attualmente sospeso.');
       } else if(module==='autoroles'){
-        alert('Guida Autoruoli:\n- Assicurati che il bot abbia il permesso Gestisci Ruoli\n- Configura i ruoli automatici nel pannello\n- Riavvia il modulo autoruoli');
+        alert('Guida Autoruoli:\n- Il servizio autoruoli è offline.');
       }
     }
 
     function editRules(){ openModal(); }
 
+    // equalizer bars (radio)
     const bars=[b1,b2,b3,b4];
     let eqInterval;
     function animateEq(){ bars.forEach(b=>{b.style.height=6+Math.random()*26+'px';b.style.opacity=0.4+Math.random()*0.6;}); }
     function startEq(){ eqInterval=setInterval(animateEq,180); animateEq(); }
     function stopEq(){ clearInterval(eqInterval); bars.forEach(b=>{b.style.height='6px';b.style.opacity=0.2;}); }
+
+    // Avvio equalizer solo se radio operativa
     startEq();
 
     let radioPlaying=true;
@@ -295,7 +305,11 @@
       appendLog('Radio '+(radioPlaying?'in riproduzione':'in pausa'));
     }
 
-    document.getElementById('btn-refresh').onclick=()=>{ appendLog('Controllo stato eseguito'); alert('Tutti i moduli operativi ✅'); };
+    // Refresh simula controllo ma segnala moduli offline (tranne radio)
+    document.getElementById('btn-refresh').onclick=()=>{ 
+      appendLog('Controllo stato eseguito — alcuni moduli offline');
+      alert('Attenzione: alcuni moduli risultano NON operativi. Solo la radio è attiva.');
+    };
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
   </script>
 </body>
