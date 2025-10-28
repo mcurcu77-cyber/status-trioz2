@@ -25,7 +25,7 @@
     button.btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:inherit;cursor:pointer}
     button.primary{background:linear-gradient(90deg,var(--accent),#0ea5b3);border:none;color:#082027}
     button.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04)}
-    button[disabled]{opacity:1;cursor:pointer} /* tutti operativi */
+    button[disabled]{opacity:1;cursor:pointer}
     .radio-playing{display:flex;align-items:center;gap:10px}
     .equalizer{width:40px;height:22px;display:flex;align-items:end;gap:3px}
     .bar{width:6px;height:6px;background:white;border-radius:3px;opacity:0.2;transform-origin:center bottom}
@@ -43,7 +43,7 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">Tutti i servizi sono operativi ✅</div>
+        <div class="sub">Alcuni servizi non operativi ⚠️</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
@@ -161,18 +161,18 @@
         </div>
       </section>
 
-      <!-- Ticket -->
+      <!-- Ticket NON operativo -->
       <section class="card" aria-labelledby="ticket-title">
         <h2 id="ticket-title">Ticket</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Sistema ticket attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Sistema ticket inattivo ⚠️</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn primary" onclick="showGuide('ticket')">Apri ticket</button>
+          <button class="btn primary" onclick="showGuide('ticket')" disabled>Apri ticket</button>
           <button class="btn" onclick="showGuide('ticket')">Guida</button>
         </div>
       </section>
@@ -196,7 +196,7 @@
     </main>
 
     <footer>
-      Dashboard locale — tutti i servizi operativi ✅
+      Dashboard locale — alcuni servizi non operativi ⚠️
     </footer>
   </div>
 
@@ -229,14 +229,15 @@
       logBox.prepend(el);
     }
 
-    // Log iniziali tutti operativi
-    ['Tutti i servizi avviati con successo',
-     'Modulo verifica online',
-     'Messaggio di benvenuto inviato correttamente',
-     'Sistema ticket funzionante',
-     'Radio streaming connesso',
-     'Autoruoli aggiornati']
-      .forEach(l=>appendLog(l));
+    // Log iniziali
+    [
+      'Tutti i servizi avviati con successo',
+      'Modulo verifica online',
+      'Messaggio di benvenuto inviato correttamente',
+      '⚠️ Sistema ticket non operativo',
+      'Radio streaming connesso',
+      'Autoruoli aggiornati'
+    ].forEach(l => appendLog(l));
 
     function clearLogs(){ if(confirm('Svuotare i log?')) logBox.innerHTML=''; }
     function downloadLogs(){
@@ -262,4 +263,29 @@
     function closeModal(){ modal.classList.remove('open'); }
     function openModal(){ modal.classList.add('open'); }
     document.getElementById('btn-open-rules')?.onclick=openModal;
-    document.getElementById('btn-open-r
+    document.getElementById('btn-open-rules-2')?.onclick=openModal;
+
+    function showWelcome(){ alert('Benvenuto!'); }
+    function showGoodbye(){ alert('Addio!'); }
+    function showGuide(key){ alert(`Guida per ${key}`); }
+    function editRules(){ alert('Modifica regole'); }
+    function acceptRules(){ alert('Regole salvate'); }
+
+    function toggleRadio(){
+      const btn = document.getElementById('btn-play');
+      if(btn.textContent.includes('pausa')){
+        btn.textContent='Riproduci';
+        document.querySelectorAll('.bar').forEach(b=>b.style.opacity=0.1);
+      } else {
+        btn.textContent='Metti in pausa';
+        document.querySelectorAll('.bar').forEach(b=>b.style.opacity=1);
+      }
+    }
+
+    document.getElementById('btn-refresh')?.addEventListener('click', ()=>{
+      appendLog('Aggiornamento stati completato');
+      alert('Stati aggiornati');
+    });
+  </script>
+</body>
+</html>
