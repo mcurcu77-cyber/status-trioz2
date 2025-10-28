@@ -43,7 +43,7 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">Alcuni servizi non operativi ⚠️</div>
+        <div class="sub">Tutti i servizi sono operativi ✅</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
@@ -161,18 +161,18 @@
         </div>
       </section>
 
-      <!-- Ticket NON operativo -->
+      <!-- Ticket operativo -->
       <section class="card" aria-labelledby="ticket-title">
         <h2 id="ticket-title">Ticket</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot off"></span>
+          <span class="dot on"></span>
           <div>
-            <div class="big">Non operativo</div>
-            <div class="label">Sistema ticket inattivo ⚠️</div>
+            <div class="big">Operativo</div>
+            <div class="label">Sistema ticket attivo ✅</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn primary" onclick="showGuide('ticket')" disabled>Apri ticket</button>
+          <button class="btn primary" onclick="showGuide('ticket')">Apri ticket</button>
           <button class="btn" onclick="showGuide('ticket')">Guida</button>
         </div>
       </section>
@@ -196,26 +196,8 @@
     </main>
 
     <footer>
-      Dashboard locale — alcuni servizi non operativi ⚠️
+      Dashboard locale — tutti i servizi operativi ✅
     </footer>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal" id="modal">
-    <div class="pane" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <h3 id="modal-title">Regole del server</h3>
-      <p class="muted-note">Mantieni le regole brevi e chiare. Esempio:</p>
-      <ol>
-        <li>Rispetto reciproco — niente offese.</li>
-        <li>Usa il canale giusto per ogni argomento.</li>
-        <li>No spam o pubblicità non autorizzata.</li>
-        <li>Segui lo staff e i moderatori.</li>
-      </ol>
-      <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
-        <button class="btn" onclick="closeModal()">Chiudi</button>
-        <button class="btn primary" onclick="acceptRules()">Salva</button>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -229,12 +211,12 @@
       logBox.prepend(el);
     }
 
-    // Log iniziali
+    // Log iniziali aggiornati
     [
       'Tutti i servizi avviati con successo',
       'Modulo verifica online',
       'Messaggio di benvenuto inviato correttamente',
-      '⚠️ Sistema ticket non operativo',
+      'Sistema ticket operativo ✅',
       'Radio streaming connesso',
       'Autoruoli aggiornati'
     ].forEach(l => appendLog(l));
