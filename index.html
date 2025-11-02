@@ -28,7 +28,7 @@
     button[disabled]{opacity:1;cursor:pointer}
     .radio-playing{display:flex;align-items:center;gap:10px}
     .equalizer{width:40px;height:22px;display:flex;align-items:end;gap:3px}
-    .bar{width:6px;height:6px;background:white;border-radius:3px;opacity:0.2;transform-origin:center bottom}
+    .bar{width:6px;height:6px;background:white;border-radius:3px;opacity:0.1;transform-origin:center bottom}
     .logs{height:150px;overflow:auto;background:rgba(0,0,0,0.15);padding:10px;border-radius:8px;font-family:monospace;font-size:13px;color:#dbeafe}
     .muted-note{font-size:13px;color:var(--muted)}
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:40}
@@ -43,7 +43,7 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">Tutti i servizi sono operativi ✅</div>
+        <div class="sub">⚠️ Alcuni servizi non sono operativi</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
@@ -57,15 +57,15 @@
       <section class="card" aria-labelledby="welcome-title">
         <h2 id="welcome-title">Benvenuto</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Messaggio di benvenuto attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Messaggio di benvenuto disattivo</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showWelcome()">Anteprima</button>
-          <button class="btn" onclick="copyText('welcome')">Copia testo</button>
+          <button class="btn" disabled>Anteprima</button>
+          <button class="btn" disabled>Copia testo</button>
         </div>
       </section>
 
@@ -73,15 +73,15 @@
       <section class="card" aria-labelledby="goodbye-title">
         <h2 id="goodbye-title">Addio</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Messaggio d'addio attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Messaggio d'addio disattivo</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showGoodbye()">Anteprima</button>
-          <button class="btn" onclick="copyText('goodbye')">Copia testo</button>
+          <button class="btn" disabled>Anteprima</button>
+          <button class="btn" disabled>Copia testo</button>
         </div>
       </section>
 
@@ -89,15 +89,15 @@
       <section class="card" aria-labelledby="verify-title">
         <h2 id="verify-title">Verifica</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Modulo verifica attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Modulo verifica disattivo</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showGuide('verify')">Guida</button>
-          <button class="btn primary">Configura</button>
+          <button class="btn" disabled>Guida</button>
+          <button class="btn primary" disabled>Configura</button>
         </div>
       </section>
 
@@ -105,15 +105,15 @@
       <section class="card" aria-labelledby="rules-title">
         <h2 id="rules-title">Regole</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Pannello regole connesso</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Pannello regole disconnesso</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" id="btn-open-rules-2">Visualizza</button>
-          <button class="btn primary" onclick="editRules()">Modifica</button>
+          <button class="btn" disabled>Visualizza</button>
+          <button class="btn primary" disabled>Modifica</button>
         </div>
       </section>
 
@@ -121,16 +121,18 @@
       <section class="card" aria-labelledby="logs-title">
         <h2 id="logs-title">Logs</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Registrazione eventi attiva</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Registrazione eventi inattiva</div>
           </div>
         </div>
-        <div class="logs" id="log-box" role="log" aria-live="polite"></div>
+        <div class="logs" id="log-box" role="log" aria-live="polite">
+          [12:00:00] ⚠️ Nessun log disponibile — sistema inattivo
+        </div>
         <div class="controls">
-          <button class="btn" onclick="downloadLogs()">Scarica</button>
-          <button class="btn" onclick="clearLogs()">Svuota</button>
+          <button class="btn" disabled>Scarica</button>
+          <button class="btn" disabled>Svuota</button>
         </div>
       </section>
 
@@ -138,42 +140,42 @@
       <section class="card" aria-labelledby="radio-title">
         <h2 id="radio-title">Radio</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Streaming radio attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Streaming radio non disponibile</div>
           </div>
         </div>
         <div class="radio-playing">
           <div class="equalizer" id="eq">
-            <div class="bar" id="b1"></div>
-            <div class="bar" id="b2"></div>
-            <div class="bar" id="b3"></div>
-            <div class="bar" id="b4"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
           </div>
           <div>
-            <div class="muted-note">Stazione: <span class="big">FM-Community</span></div>
+            <div class="muted-note">Stazione: <span class="big">—</span></div>
             <div class="controls" style="margin-top:6px">
-              <button class="btn primary" id="btn-play" onclick="toggleRadio()">Metti in pausa</button>
-              <button class="btn" onclick="copyText('radio')">Copia link</button>
+              <button class="btn primary" disabled>Riproduci</button>
+              <button class="btn" disabled>Copia link</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Ticket operativo -->
+      <!-- Ticket -->
       <section class="card" aria-labelledby="ticket-title">
         <h2 id="ticket-title">Ticket</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Sistema ticket attivo ✅</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Sistema ticket disattivo ❌</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn primary" onclick="showGuide('ticket')">Apri ticket</button>
-          <button class="btn" onclick="showGuide('ticket')">Guida</button>
+          <button class="btn primary" disabled>Apri ticket</button>
+          <button class="btn" disabled>Guida</button>
         </div>
       </section>
 
@@ -181,29 +183,27 @@
       <section class="card" aria-labelledby="autoroles-title">
         <h2 id="autoroles-title">Autoruoli</h2>
         <div class="status" style="margin-bottom:8px">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Autoruoli attivi</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Autoruoli disattivi</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn primary" onclick="showGuide('autoroles')">Configura</button>
-          <button class="btn" onclick="showGuide('autoroles')">Guida</button>
+          <button class="btn primary" disabled>Configura</button>
+          <button class="btn" disabled>Guida</button>
         </div>
       </section>
 
     </main>
 
     <footer>
-      Dashboard locale — tutti i servizi operativi ✅
+      Dashboard locale — nessun servizio operativo ❌
     </footer>
   </div>
 
   <script>
     const logBox = document.getElementById('log-box');
-    const modal = document.getElementById('modal');
-
     function appendLog(text){
       const time = new Date().toLocaleTimeString();
       const el = document.createElement('div');
@@ -211,62 +211,12 @@
       logBox.prepend(el);
     }
 
-    // Log iniziali aggiornati
-    [
-      'Tutti i servizi avviati con successo',
-      'Modulo verifica online',
-      'Messaggio di benvenuto inviato correttamente',
-      'Sistema ticket operativo ✅',
-      'Radio streaming connesso',
-      'Autoruoli aggiornati'
-    ].forEach(l => appendLog(l));
-
-    function clearLogs(){ if(confirm('Svuotare i log?')) logBox.innerHTML=''; }
-    function downloadLogs(){
-      const text = Array.from(logBox.children).map(x=>x.textContent).reverse().join('\n');
-      const blob = new Blob([text], {type:'text/plain'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href=url; a.download='logs.txt'; a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function copyText(key){
-      const samples={
-        welcome:'Benvenuto! Leggi le regole e divertiti 🙂',
-        goodbye:'Grazie per essere stato con noi — a presto!',
-        radio:'https://radio.example/stream'
-      };
-      navigator.clipboard?.writeText(samples[key]||'')
-        .then(()=>alert('Testo copiato negli appunti'))
-        .catch(()=>alert('Copia non supportata'));
-    }
-
-    function closeModal(){ modal.classList.remove('open'); }
-    function openModal(){ modal.classList.add('open'); }
-    document.getElementById('btn-open-rules')?.onclick=openModal;
-    document.getElementById('btn-open-rules-2')?.onclick=openModal;
-
-    function showWelcome(){ alert('Benvenuto!'); }
-    function showGoodbye(){ alert('Addio!'); }
-    function showGuide(key){ alert(`Guida per ${key}`); }
-    function editRules(){ alert('Modifica regole'); }
-    function acceptRules(){ alert('Regole salvate'); }
-
-    function toggleRadio(){
-      const btn = document.getElementById('btn-play');
-      if(btn.textContent.includes('pausa')){
-        btn.textContent='Riproduci';
-        document.querySelectorAll('.bar').forEach(b=>b.style.opacity=0.1);
-      } else {
-        btn.textContent='Metti in pausa';
-        document.querySelectorAll('.bar').forEach(b=>b.style.opacity=1);
-      }
-    }
+    // Log iniziale aggiornato
+    appendLog('⚠️ Tutti i servizi risultano non operativi');
 
     document.getElementById('btn-refresh')?.addEventListener('click', ()=>{
-      appendLog('Aggiornamento stati completato');
-      alert('Stati aggiornati');
+      appendLog('Aggiornamento: nessun servizio disponibile');
+      alert('Nessun servizio operativo');
     });
   </script>
 </body>
