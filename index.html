@@ -25,6 +25,7 @@
     button.btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:inherit;cursor:pointer}
     button.primary{background:linear-gradient(90deg,var(--accent),#0ea5b3);border:none;color:#082027}
     button.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04)}
+    button:disabled{opacity:0.5;cursor:not-allowed}
     .radio-playing{display:flex;align-items:center;gap:10px}
     .equalizer{width:40px;height:22px;display:flex;align-items:end;gap:3px}
     .bar{width:6px;height:6px;background:white;border-radius:3px;opacity:1;transform-origin:center bottom;animation:move 0.8s ease-in-out infinite alternate}
@@ -42,7 +43,7 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">✅ Tutti i servizi sono operativi</div>
+        <div class="sub">⚠️ Alcuni servizi non sono operativi</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
@@ -133,27 +134,27 @@
         </div>
       </section>
 
-      <!-- Radio -->
+      <!-- Radio (NON OPERATIVA) -->
       <section class="card">
         <h2>Radio</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Streaming radio attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Streaming radio non disponibile</div>
           </div>
         </div>
         <div class="radio-playing">
           <div class="equalizer">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+            <div class="bar" style="animation:none;opacity:0.3"></div>
+            <div class="bar" style="animation:none;opacity:0.3"></div>
+            <div class="bar" style="animation:none;opacity:0.3"></div>
+            <div class="bar" style="animation:none;opacity:0.3"></div>
           </div>
           <div>
             <div class="muted-note">Stazione: <span class="big">FM-Community</span></div>
             <div class="controls">
-              <button class="btn primary" id="btn-play" onclick="toggleRadio()">Metti in pausa</button>
+              <button class="btn" id="btn-play" disabled>Non disponibile</button>
               <button class="btn" onclick="copyText('radio')">Copia link</button>
             </div>
           </div>
@@ -195,7 +196,7 @@
     </main>
 
     <footer>
-      Dashboard locale — tutti i servizi operativi ✅
+      Dashboard locale — alcuni servizi non operativi ⚠️
     </footer>
   </div>
 
@@ -214,7 +215,7 @@
       'Modulo verifica online',
       'Messaggio di benvenuto inviato correttamente',
       'Sistema ticket operativo ✅',
-      'Radio streaming connesso',
+      'Radio streaming offline ❌',
       'Autoruoli aggiornati'
     ].forEach(l => appendLog(l));
 
@@ -244,21 +245,9 @@
     function showGuide(key){ alert(`Guida per ${key}`); }
     function editRules(){ alert('Modifica regole'); }
 
-    function toggleRadio(){
-      const btn = document.getElementById('btn-play');
-      const bars = document.querySelectorAll('.bar');
-      if(btn.textContent.includes('pausa')){
-        btn.textContent='Riproduci';
-        bars.forEach(b=>b.style.animation='none');
-      } else {
-        btn.textContent='Metti in pausa';
-        bars.forEach(b=>b.style.animation='move 0.8s ease-in-out infinite alternate');
-      }
-    }
-
     document.getElementById('btn-refresh')?.addEventListener('click', ()=>{
-      appendLog('Aggiornamento stati completato ✅');
-      alert('Tutti i servizi sono aggiornati e operativi');
+      appendLog('Aggiornamento stati completato ⚠️');
+      alert('Radio ancora non disponibile, altri servizi operativi');
     });
   </script>
 </body>
