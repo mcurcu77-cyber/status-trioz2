@@ -43,11 +43,11 @@
     <header>
       <div>
         <h1>Dashboard servizi — Server</h1>
-        <div class="sub">⚠️ Alcuni servizi non sono operativi</div>
+        <div class="sub">❌ Tutti i servizi non operativi</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" id="btn-refresh" title="Aggiorna stati">↻ Aggiorna</button>
-        <button class="btn" id="btn-open-rules">Regole</button>
+        <button class="btn" id="btn-open-rules" disabled>Regole</button>
       </div>
     </header>
 
@@ -57,15 +57,15 @@
       <section class="card">
         <h2>Benvenuto</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Messaggio di benvenuto attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Servizio disattivato</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showWelcome()">Anteprima</button>
-          <button class="btn" onclick="copyText('welcome')">Copia testo</button>
+          <button class="btn" disabled>Anteprima</button>
+          <button class="btn" disabled>Copia testo</button>
         </div>
       </section>
 
@@ -73,15 +73,15 @@
       <section class="card">
         <h2>Addio</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Messaggio d'addio attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Servizio disattivato</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showGoodbye()">Anteprima</button>
-          <button class="btn" onclick="copyText('goodbye')">Copia testo</button>
+          <button class="btn" disabled>Anteprima</button>
+          <button class="btn" disabled>Copia testo</button>
         </div>
       </section>
 
@@ -89,15 +89,15 @@
       <section class="card">
         <h2>Verifica</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Modulo verifica attivo</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Modulo offline</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" onclick="showGuide('verify')">Guida</button>
-          <button class="btn primary">Configura</button>
+          <button class="btn" disabled>Guida</button>
+          <button class="btn primary" disabled>Configura</button>
         </div>
       </section>
 
@@ -105,15 +105,15 @@
       <section class="card">
         <h2>Regole</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Pannello regole connesso</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Pannello disattivato</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn" id="btn-open-rules-2">Visualizza</button>
-          <button class="btn primary" onclick="editRules()">Modifica</button>
+          <button class="btn" disabled>Visualizza</button>
+          <button class="btn primary" disabled>Modifica</button>
         </div>
       </section>
 
@@ -121,20 +121,20 @@
       <section class="card">
         <h2>Logs</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Registrazione eventi attiva</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Registrazione eventi disattivata</div>
           </div>
         </div>
         <div class="logs" id="log-box"></div>
         <div class="controls">
-          <button class="btn" onclick="downloadLogs()">Scarica</button>
-          <button class="btn" onclick="clearLogs()">Svuota</button>
+          <button class="btn" disabled>Scarica</button>
+          <button class="btn" disabled>Svuota</button>
         </div>
       </section>
 
-      <!-- Radio (NON OPERATIVA) -->
+      <!-- Radio -->
       <section class="card">
         <h2>Radio</h2>
         <div class="status">
@@ -155,7 +155,7 @@
             <div class="muted-note">Stazione: <span class="big">FM-Community</span></div>
             <div class="controls">
               <button class="btn" id="btn-play" disabled>Non disponibile</button>
-              <button class="btn" onclick="copyText('radio')">Copia link</button>
+              <button class="btn" disabled>Copia link</button>
             </div>
           </div>
         </div>
@@ -165,15 +165,15 @@
       <section class="card">
         <h2>Ticket</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Sistema ticket attivo ✅</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Sistema disattivato</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn primary" onclick="showGuide('ticket')">Apri ticket</button>
-          <button class="btn" onclick="showGuide('ticket')">Guida</button>
+          <button class="btn primary" disabled>Apri ticket</button>
+          <button class="btn" disabled>Guida</button>
         </div>
       </section>
 
@@ -181,22 +181,22 @@
       <section class="card">
         <h2>Autoruoli</h2>
         <div class="status">
-          <span class="dot on"></span>
+          <span class="dot off"></span>
           <div>
-            <div class="big">Operativo</div>
-            <div class="label">Autoruoli attivi</div>
+            <div class="big">Non operativo</div>
+            <div class="label">Autoruoli disattivati</div>
           </div>
         </div>
         <div class="controls">
-          <button class="btn primary" onclick="showGuide('autoroles')">Configura</button>
-          <button class="btn" onclick="showGuide('autoroles')">Guida</button>
+          <button class="btn primary" disabled>Configura</button>
+          <button class="btn" disabled>Guida</button>
         </div>
       </section>
 
     </main>
 
     <footer>
-      Dashboard locale — alcuni servizi non operativi ⚠️
+      ❌ Tutti i servizi attualmente non operativi
     </footer>
   </div>
 
@@ -211,43 +211,17 @@
     }
 
     [
-      'Tutti i servizi avviati con successo',
-      'Modulo verifica online',
-      'Messaggio di benvenuto inviato correttamente',
-      'Sistema ticket operativo ✅',
-      'Radio streaming offline ❌',
-      'Autoruoli aggiornati'
+      '⚠️ Tutti i servizi sono offline',
+      'Modulo verifica non disponibile',
+      'Messaggio di benvenuto disattivato',
+      'Sistema ticket non operativo',
+      'Radio streaming offline',
+      'Autoruoli disattivati'
     ].forEach(l => appendLog(l));
 
-    function clearLogs(){ if(confirm('Svuotare i log?')) logBox.innerHTML=''; }
-    function downloadLogs(){
-      const text = Array.from(logBox.children).map(x=>x.textContent).reverse().join('\n');
-      const blob = new Blob([text], {type:'text/plain'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href=url; a.download='logs.txt'; a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function copyText(key){
-      const samples={
-        welcome:'Benvenuto! Leggi le regole e divertiti 🙂',
-        goodbye:'Grazie per essere stato con noi — a presto!',
-        radio:'https://radio.example/stream'
-      };
-      navigator.clipboard?.writeText(samples[key]||'')
-        .then(()=>alert('Testo copiato negli appunti'))
-        .catch(()=>alert('Copia non supportata'));
-    }
-
-    function showWelcome(){ alert('Benvenuto!'); }
-    function showGoodbye(){ alert('Addio!'); }
-    function showGuide(key){ alert(`Guida per ${key}`); }
-    function editRules(){ alert('Modifica regole'); }
-
     document.getElementById('btn-refresh')?.addEventListener('click', ()=>{
-      appendLog('Aggiornamento stati completato ⚠️');
-      alert('Radio ancora non disponibile, altri servizi operativi');
+      appendLog('Tentativo di aggiornamento fallito ❌');
+      alert('Nessun servizio operativo al momento');
     });
   </script>
 </body>
